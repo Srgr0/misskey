@@ -1,3 +1,5 @@
+# jsのテスト
+# codecov外して使う
 # This workflow will do a clean install of node dependencies, build the source code and run tests across different versions of node
 # For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
 
@@ -5,9 +7,11 @@ name: Test (misskey.js)
 
 on:
   push:
-    branches: [ develop ]
+    branches:
+      - develop-srgr0
   pull_request:
-    branches: [ develop ]
+    branches:
+      - develop-srgr0
 
 jobs:
   test:
@@ -45,8 +49,8 @@ jobs:
         env:
           CI: true
 
-      - name: Upload Coverage
-        uses: codecov/codecov-action@v3
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-          files: ./packages/misskey-js/coverage/coverage-final.json
+#      - name: Upload Coverage
+#        uses: codecov/codecov-action@v3
+#        with:
+#          token: ${{ secrets.CODECOV_TOKEN }}
+#          files: ./packages/misskey-js/coverage/coverage-final.json
