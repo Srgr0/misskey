@@ -9,6 +9,8 @@ on:
     branches:
       - develop-srgr0
   pull_request:
+    branches:
+      - develop-srgr0
 
 jobs:
   dockle:
