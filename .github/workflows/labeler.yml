@@ -1,8 +1,13 @@
+#prにラベル付け
+#使わない
 name: "Pull Request Labeler"
 on:
-  pull_request_target:
-    branches-ignore:
-      - 'l10n_develop'
+#  pull_request_target:
+#    branches-ignore:
+#      - 'l10n_develop'
+  push:
+    branches:
+      - tsukawanai
 
 jobs:
   triage:
