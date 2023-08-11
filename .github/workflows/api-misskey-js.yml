@@ -1,9 +1,14 @@
 #APIレポート
-#すべてのpush, prで発火
-#外部への影響なし
+#有効にしておく
 name: API report (misskey.js)
 
-on: [push, pull_request]
+on:
+  push:
+    branches:
+      - develop-srgr0
+  pull_request:
+    branches:
+      - develop-srgr0
 
 jobs:
   report:
