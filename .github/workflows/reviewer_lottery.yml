@@ -1,7 +1,11 @@
+# 使わない
 name: "Reviewer lottery"
 on:
-  pull_request_target:
-    types: [opened, ready_for_review, reopened]
+#  pull_request_target:
+#    types: [opened, ready_for_review, reopened]
+  push:
+    branches:
+      - tsukawanai
 
 jobs:
   test:
