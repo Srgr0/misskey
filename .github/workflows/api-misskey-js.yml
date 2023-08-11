@@ -1,3 +1,6 @@
+#APIレポート
+#すべてのpush, prで発火
+#外部への影響なし
 name: API report (misskey.js)
 
 on: [push, pull_request]
