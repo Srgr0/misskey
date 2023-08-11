@@ -1,8 +1,12 @@
+# 使わない
 # file: .github/workflows/preview-closed.yaml
 on:
-  pull_request:
-    types:
-      - closed
+#  pull_request:
+#    types:
+#      - closed
+  push:
+    branches:
+      - tsukawanai
 
 name: Destroy preview environment
 
