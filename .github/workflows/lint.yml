@@ -41,7 +41,7 @@ jobs:
       with:
         version: 8
         run_install: false
-    - uses: actions/setup-node@v3.7.0
+    - uses: actions/setup-node@v3.8.1
       with:
         node-version-file: '.node-version'
         cache: 'pnpm'
@@ -68,7 +68,7 @@ jobs:
       with:
         version: 7
         run_install: false
-    - uses: actions/setup-node@v3.7.0
+    - uses: actions/setup-node@v3.8.1
       with:
         node-version-file: '.node-version'
         cache: 'pnpm'
@@ -94,7 +94,7 @@ jobs:
       with:
         version: 7
         run_install: false
-    - uses: actions/setup-node@v3.7.0
+    - uses: actions/setup-node@v3.8.1
       with:
         node-version-file: '.node-version'
         cache: 'pnpm'
