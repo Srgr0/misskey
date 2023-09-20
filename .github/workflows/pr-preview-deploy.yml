@@ -1,7 +1,11 @@
+# 使わない
 # Run secret-dependent integration tests only after /deploy approval
 on:
-  repository_dispatch:
-    types: [deploy-command]
+#  repository_dispatch:
+#    types: [deploy-command]
+  push:
+    branches:
+      - tsukawanai
 
 name: Deploy preview environment
 
