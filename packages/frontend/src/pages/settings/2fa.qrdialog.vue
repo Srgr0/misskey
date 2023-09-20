@@ -52,7 +52,7 @@ SPDX-License-Identifier: AGPL-3.0-only
 					<MkSpacer :marginMin="20" :marginMax="28">
 						<div class="_gaps">
 							<div>{{ i18n.ts._2fa.step3Title }}</div>
-							<MkInput v-model="token" autocomplete="one-time-code" type="number"></MkInput>
+							<MkInput v-model="token" autocomplete="one-time-code"></MkInput>
 							<div>{{ i18n.ts._2fa.step3 }}</div>
 						</div>
 						<div class="_buttonsCenter" style="margin-top: 16px;">
@@ -103,11 +103,11 @@ import MkButton from '@/components/MkButton.vue';
 import MkModalWindow from '@/components/MkModalWindow.vue';
 import MkKeyValue from '@/components/MkKeyValue.vue';
 import MkInput from '@/components/MkInput.vue';
-import { i18n } from '@/i18n';
-import * as os from '@/os';
+import { i18n } from '@/i18n.js';
+import * as os from '@/os.js';
 import MkFolder from '@/components/MkFolder.vue';
 import MkInfo from '@/components/MkInfo.vue';
-import { confetti } from '@/scripts/confetti';
+import { confetti } from '@/scripts/confetti.js';
 
 defineProps<{
 	twoFactorData: {
