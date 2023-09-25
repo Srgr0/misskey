@@ -2539,11 +2539,20 @@ type ModerationLog = {
     type: 'addCustomEmoji';
     info: ModerationLogPayloads['addCustomEmoji'];
 } | {
+    type: 'updateCustomEmoji';
+    info: ModerationLogPayloads['updateCustomEmoji'];
+} | {
+    type: 'deleteCustomEmoji';
+    info: ModerationLogPayloads['deleteCustomEmoji'];
+} | {
     type: 'assignRole';
     info: ModerationLogPayloads['assignRole'];
 } | {
     type: 'unassignRole';
     info: ModerationLogPayloads['unassignRole'];
+} | {
+    type: 'createRole';
+    info: ModerationLogPayloads['createRole'];
 } | {
     type: 'updateRole';
     info: ModerationLogPayloads['updateRole'];
@@ -2557,6 +2566,30 @@ type ModerationLog = {
     type: 'promoteQueue';
     info: ModerationLogPayloads['promoteQueue'];
 } | {
+    type: 'deleteDriveFile';
+    info: ModerationLogPayloads['deleteDriveFile'];
+} | {
+    type: 'deleteNote';
+    info: ModerationLogPayloads['deleteNote'];
+} | {
+    type: 'createGlobalAnnouncement';
+    info: ModerationLogPayloads['createGlobalAnnouncement'];
+} | {
+    type: 'createUserAnnouncement';
+    info: ModerationLogPayloads['createUserAnnouncement'];
+} | {
+    type: 'updateGlobalAnnouncement';
+    info: ModerationLogPayloads['updateGlobalAnnouncement'];
+} | {
+    type: 'updateUserAnnouncement';
+    info: ModerationLogPayloads['updateUserAnnouncement'];
+} | {
+    type: 'deleteGlobalAnnouncement';
+    info: ModerationLogPayloads['deleteGlobalAnnouncement'];
+} | {
+    type: 'deleteUserAnnouncement';
+    info: ModerationLogPayloads['deleteUserAnnouncement'];
+} | {
     type: 'resetPassword';
     info: ModerationLogPayloads['resetPassword'];
 } | {
@@ -2565,10 +2598,16 @@ type ModerationLog = {
 } | {
     type: 'unsuspendRemoteInstance';
     info: ModerationLogPayloads['unsuspendRemoteInstance'];
+} | {
+    type: 'markSensitiveDriveFile';
+    info: ModerationLogPayloads['markSensitiveDriveFile'];
+} | {
+    type: 'unmarkSensitiveDriveFile';
+    info: ModerationLogPayloads['unmarkSensitiveDriveFile'];
 });
 
 // @public (undocumented)
-export const moderationLogTypes: readonly ["updateServerSettings", "suspend", "unsuspend", "updateUserNote", "addCustomEmoji", "assignRole", "unassignRole", "updateRole", "deleteRole", "clearQueue", "promoteQueue", "deleteDriveFile", "deleteNote", "createGlobalAnnouncement", "createUserAnnouncement", "resetPassword", "suspendRemoteInstance", "unsuspendRemoteInstance"];
+export const moderationLogTypes: readonly ["updateServerSettings", "suspend", "unsuspend", "updateUserNote", "addCustomEmoji", "updateCustomEmoji", "deleteCustomEmoji", "assignRole", "unassignRole", "createRole", "updateRole", "deleteRole", "clearQueue", "promoteQueue", "deleteDriveFile", "deleteNote", "createGlobalAnnouncement", "createUserAnnouncement", "updateGlobalAnnouncement", "updateUserAnnouncement", "deleteGlobalAnnouncement", "deleteUserAnnouncement", "resetPassword", "suspendRemoteInstance", "unsuspendRemoteInstance", "markSensitiveDriveFile", "unmarkSensitiveDriveFile"];
 
 // @public (undocumented)
 export const mutedNoteReasons: readonly ["word", "manual", "spam", "other"];

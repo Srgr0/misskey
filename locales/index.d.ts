@@ -1123,6 +1123,7 @@ export interface Locale {
     "unnotifyNotes": string;
     "authentication": string;
     "authenticationRequiredToContinue": string;
+    "dateAndTime": string;
     "_announcement": {
         "forExistingUsers": string;
         "forExistingUsersDescription": string;
@@ -2250,18 +2251,31 @@ export interface Locale {
         };
     };
     "_moderationLogTypes": {
+        "createRole": string;
+        "deleteRole": string;
+        "updateRole": string;
         "assignRole": string;
         "unassignRole": string;
-        "updateRole": string;
         "suspend": string;
         "unsuspend": string;
         "addCustomEmoji": string;
+        "updateCustomEmoji": string;
+        "deleteCustomEmoji": string;
         "updateServerSettings": string;
         "updateUserNote": string;
         "deleteDriveFile": string;
         "deleteNote": string;
         "createGlobalAnnouncement": string;
         "createUserAnnouncement": string;
+        "updateGlobalAnnouncement": string;
+        "updateUserAnnouncement": string;
+        "deleteGlobalAnnouncement": string;
+        "deleteUserAnnouncement": string;
+        "resetPassword": string;
+        "suspendRemoteInstance": string;
+        "unsuspendRemoteInstance": string;
+        "markSensitiveDriveFile": string;
+        "unmarkSensitiveDriveFile": string;
     };
 }
 declare const locales: {
