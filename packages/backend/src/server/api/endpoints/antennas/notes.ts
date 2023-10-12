@@ -73,8 +73,8 @@ export default class extends Endpoint<typeof meta, typeof paramDef> { // eslint-
 		private redisTimelineService: RedisTimelineService,
 	) {
 		super(meta, paramDef, async (ps, me) => {
-			const untilId = ps.untilId ?? ps.untilDate ? this.idService.genId(new Date(ps.untilDate!)) : null;
-			const sinceId = ps.sinceId ?? ps.sinceDate ? this.idService.genId(new Date(ps.sinceDate!)) : null;
+			const untilId = ps.untilId ?? (ps.untilDate ? this.idService.genId(new Date(ps.untilDate!)) : null);
+			const sinceId = ps.sinceId ?? (ps.sinceDate ? this.idService.genId(new Date(ps.sinceDate!)) : null);
 
 			const antenna = await this.antennasRepository.findOneBy({
 				id: ps.antennaId,
@@ -109,7 +109,11 @@ export default class extends Endpoint<typeof meta, typeof paramDef> { // eslint-
 			this.queryService.generateBlockedUserQuery(query, me);
 
 			const notes = await query.getMany();
-			notes.sort((a, b) => a.id > b.id ? -1 : 1);
+			if (sinceId != null && untilId == null) {
+				notes.sort((a, b) => a.id < b.id ? -1 : 1);
+			} else {
+				notes.sort((a, b) => a.id > b.id ? -1 : 1);
+			}
 
 			if (notes.length > 0) {
 				this.noteReadService.read(me.id, notes);

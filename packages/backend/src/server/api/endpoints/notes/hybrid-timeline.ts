@@ -55,6 +55,7 @@ export const paramDef = {
 		includeLocalRenotes: { type: 'boolean', default: true },
 		withFiles: { type: 'boolean', default: false },
 		withRenotes: { type: 'boolean', default: true },
+		withReplies: { type: 'boolean', default: false },
 	},
 	required: [],
 } as const;
@@ -76,8 +77,8 @@ export default class extends Endpoint<typeof meta, typeof paramDef> { // eslint-
 		private redisTimelineService: RedisTimelineService,
 	) {
 		super(meta, paramDef, async (ps, me) => {
-			const untilId = ps.untilId ?? ps.untilDate ? this.idService.genId(new Date(ps.untilDate!)) : null;
-			const sinceId = ps.sinceId ?? ps.sinceDate ? this.idService.genId(new Date(ps.sinceDate!)) : null;
+			const untilId = ps.untilId ?? (ps.untilDate ? this.idService.genId(new Date(ps.untilDate!)) : null);
+			const sinceId = ps.sinceId ?? (ps.sinceDate ? this.idService.genId(new Date(ps.sinceDate!)) : null);
 
 			const policies = await this.roleService.getUserPolicies(me.id);
 			if (!policies.ltlAvailable) {
@@ -94,12 +95,29 @@ export default class extends Endpoint<typeof meta, typeof paramDef> { // eslint-
 				this.cacheService.userBlockedCache.fetch(me.id),
 			]);
 
-			const [htlNoteIds, ltlNoteIds] = await this.redisTimelineService.getMulti([
-				ps.withFiles ? `homeTimelineWithFiles:${me.id}` : `homeTimeline:${me.id}`,
-				ps.withFiles ? 'localTimelineWithFiles' : 'localTimeline',
-			], untilId, sinceId);
+			let noteIds: string[];
 
-			let noteIds = Array.from(new Set([...htlNoteIds, ...ltlNoteIds]));
+			if (ps.withFiles) {
+				const [htlNoteIds, ltlNoteIds] = await this.redisTimelineService.getMulti([
+					`homeTimelineWithFiles:${me.id}`,
+					'localTimelineWithFiles',
+				], untilId, sinceId);
+				noteIds = Array.from(new Set([...htlNoteIds, ...ltlNoteIds]));
+			} else if (ps.withReplies) {
+				const [htlNoteIds, ltlNoteIds, ltlReplyNoteIds] = await this.redisTimelineService.getMulti([
+					`homeTimeline:${me.id}`,
+					'localTimeline',
+					'localTimelineWithReplies',
+				], untilId, sinceId);
+				noteIds = Array.from(new Set([...htlNoteIds, ...ltlNoteIds, ...ltlReplyNoteIds]));
+			} else {
+				const [htlNoteIds, ltlNoteIds] = await this.redisTimelineService.getMulti([
+					`homeTimeline:${me.id}`,
+					'localTimeline',
+				], untilId, sinceId);
+				noteIds = Array.from(new Set([...htlNoteIds, ...ltlNoteIds]));
+			}
+
 			noteIds.sort((a, b) => a > b ? -1 : 1);
 			noteIds = noteIds.slice(0, ps.limit);
 

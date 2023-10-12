@@ -74,8 +74,8 @@ export default class extends Endpoint<typeof meta, typeof paramDef> { // eslint-
 		private activeUsersChart: ActiveUsersChart,
 	) {
 		super(meta, paramDef, async (ps, me) => {
-			const untilId = ps.untilId ?? ps.untilDate ? this.idService.genId(new Date(ps.untilDate!)) : null;
-			const sinceId = ps.sinceId ?? ps.sinceDate ? this.idService.genId(new Date(ps.sinceDate!)) : null;
+			const untilId = ps.untilId ?? (ps.untilDate ? this.idService.genId(new Date(ps.untilDate!)) : null);
+			const sinceId = ps.sinceId ?? (ps.sinceDate ? this.idService.genId(new Date(ps.sinceDate!)) : null);
 			const isRangeSpecified = untilId != null && sinceId != null;
 
 			const channel = await this.channelsRepository.findOneBy({
@@ -111,7 +111,7 @@ export default class extends Endpoint<typeof meta, typeof paramDef> { // eslint-
 					let timeline = await query.getMany();
 
 					timeline = timeline.filter(note => {
-						if (me && isUserRelated(note, userIdsWhoMeMuting, true)) return false;
+						if (me && isUserRelated(note, userIdsWhoMeMuting)) return false;
 
 						return true;
 					});
