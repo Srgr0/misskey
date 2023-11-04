@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - develop-srgr0
+  schedule:
+    - cron: '*/10 * * * *'
   workflow_dispatch:
 
 jobs:
