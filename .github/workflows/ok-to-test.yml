@@ -1,9 +1,13 @@
+# 使わない
 # If someone with write access comments "/ok-to-test" on a pull request, emit a repository_dispatch event
 name: Ok To Test
 
 on:
-  issue_comment:
-    types: [created]
+#  issue_comment:
+#    types: [created]
+  push:
+    branches:
+      - tsukawanai
 
 jobs:
   ok-to-test:

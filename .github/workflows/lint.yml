@@ -1,11 +1,33 @@
+# コード分析
+#　有効にしておく
 name: Lint
 
 on:
   push:
     branches:
-      - master
-      - develop
+      - develop-srgr0
   pull_request:
+    branches:
+      - develop-srgr0
+    types:
+      - assigned
+      - unassigned
+      - labeled
+      - unlabeled
+      - opened
+      - edited
+      - closed
+      - reopened
+      - synchronize
+      - converted_to_draft
+      - ready_for_review
+      - locked
+      - unlocked
+      - review_requested
+      - review_request_removed
+      - auto_merge_enabled
+      - auto_merge_disabled
+  issues:
 
 jobs:
   pnpm_install:
