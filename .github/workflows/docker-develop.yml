@@ -119,7 +119,9 @@ jobs:
             username: ${{ secrets.REGISTRY_USERNAME }}
             password: ${{ secrets.REGISTRY_PASSWORD }}
         - run: |
-            docker build . -t ${{ secrets.REGISTRY_LOGIN_SERVER }}/misskey:develop
+            docker build . -t ${{ secrets.REGISTRY_LOGIN_SERVER }}/misskey:develop \
+            --cache-from: type=gha \
+            --cache-to: type=gha,mode=max
             docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/misskey:develop
 
 
