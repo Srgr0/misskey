@@ -118,17 +118,8 @@ jobs:
             login-server: ${{ secrets.REGISTRY_LOGIN_SERVER }}
             username: ${{ secrets.REGISTRY_USERNAME }}
             password: ${{ secrets.REGISTRY_PASSWORD }}
+        - run: |
+            docker build . -t ${{ secrets.REGISTRY_LOGIN_SERVER }}/misskey:develop
+            docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/misskey:develop
 
-        - name: 'Build and Push to Azure Container Registory'
-          uses: docker/build-push-action@v5
-          with:
-            builder: ${{ steps.buildx.outputs.name }}
-            context: .
-            push: true
-            platforms: ${{ steps.buildx.outputs.platforms }}
-            provenance: false
-            tags: ${{ secrets.REGISTRY_LOGIN_SERVER }}/misskey:develop
-            labels: develop
-            cache-from: type=gha
-            cache-to: type=gha,mode=max
-    
+
