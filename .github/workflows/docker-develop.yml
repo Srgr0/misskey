@@ -122,4 +122,34 @@ jobs:
             docker build . -t ${{ secrets.REGISTRY_LOGIN_SERVER }}/misskey:develop
             docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/misskey:develop
 
+  push_to_ttlsh:
+    name: 'Push Docker image to ttl.sh'
+    runs-on: ubuntu-latest
+    #if: github.repository == 'misskey-dev/misskey'
+    steps:
+      - name: 'Checkout GitHub Action'
+        uses: actions/checkout@main
 
+      - name: 'Set up Docker Buildx'
+        id: buildx
+        uses: docker/setup-buildx-action@v3.0.0
+        with:
+          platforms: linux/amd64,linux/arm64
+
+      - name: 'Docker meta'
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: srgr0/misskey
+
+      - name: 'Build and Push to ttl.sh'
+        uses: docker/build-push-action@v5
+        with:
+          builder: ${{ steps.buildx.outputs.name }}
+          context: .
+          push: true
+          platforms: ${{ steps.buildx.outputs.platforms }}
+          provenance: false
+          tags: ttl.sh/misskey-srgr0:1d
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
