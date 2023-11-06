@@ -142,6 +142,10 @@ jobs:
         with:
           images: srgr0/misskey
 
+      - name: 'Generate UUID'
+        id: generate_uuid
+        run: echo "::set-output name=uuid::$(uuidgen)"
+
       - name: 'Build and Push to ttl.sh'
         uses: docker/build-push-action@v5
         with:
@@ -150,6 +154,6 @@ jobs:
           push: true
           platforms: ${{ steps.buildx.outputs.platforms }}
           provenance: false
-          tags: ttl.sh/misskey-srgr0:1d
+          tags: ttl.sh/${{ steps.generate_uuid.outputs.uuid }}:1d
           cache-from: type=gha
           cache-to: type=gha,mode=max
