@@ -63,7 +63,7 @@ SPDX-License-Identifier: AGPL-3.0-only
 							<MkButton small @click="editModerationNote = true">{{ i18n.ts.addModerationNote }}</MkButton>
 						</div>
 					</div>
-					<div v-if="$i" && "isEditingMemo || memoDraft" class="memo" :class="{'no-memo': !memoDraft}">
+					<div v-if="$i && isEditingMemo || memoDraft" class="memo" :class="{'no-memo': !memoDraft}">
 						<div class="heading" v-text="i18n.ts.memo"/>
 						<textarea
 							ref="memoTextareaEl"
