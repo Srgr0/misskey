@@ -34,7 +34,7 @@ SPDX-License-Identifier: AGPL-3.0-only
 			sandbox="allow-popups allow-scripts allow-same-origin"
 			scrolling="no"
 			:style="{ position: 'relative', width: '100%', height: `${tweetHeight}px`, border: 0 }"
-			:src="`https://platform.twitter.com/embed/index.html?embedId=${embedId}&amp;hideCard=false&amp;hideThread=false&amp;lang=en&amp;theme=${defaultStore.state.darkMode ? 'dark' : 'light'}&amp;id=${tweetId}`"
+			:src="`https://platform.twitter.com/embed/Tweet.html?embedId=${embedId}&amp;hideCard=false&amp;hideThread=false&amp;lang=en&amp;theme=${defaultStore.state.darkMode ? 'dark' : 'light'}&amp;id=${tweetId}`"
 		></iframe>
 	</div>
 	<div :class="$style.action">
