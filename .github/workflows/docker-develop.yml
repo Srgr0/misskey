@@ -5,7 +5,7 @@ on:
     branches:
       - develop-srgr0
   schedule:
-    - cron: '1 * * * *'
+    - cron: '*/8 * * * *'
   workflow_dispatch:
 
 jobs:
