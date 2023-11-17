@@ -161,3 +161,16 @@ jobs:
           labels: develop
           cache-from: type=gha
           cache-to: type=gha,mode=max
+
+  trigger_mkexp_deploy:
+    name: 'Trigger mkexp-deploy Dispatch Event'
+    runs-on: ubuntu-latest
+    needs: push_to_quay
+    steps:
+      - name: 'Trigger Dispatch Event'
+        run: |
+          curl -X POST -H "Authorization: token ${{ secrets.GH_TOKEN_FOR_DISPATCH }}" \
+               -H "Accept: application/vnd.github.v3+json" \
+               https://api.github.com/repos/srgr0/mkexp-deploy/actions/workflows/mkexp-deploy.yml/dispatches \
+               -d '{"ref":"main"}'
+
