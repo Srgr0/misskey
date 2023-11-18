@@ -7,6 +7,7 @@ on:
   schedule:
     - cron: '2 */6 * * *'
   workflow_dispatch:
+  concurrency: docker-develop
 
 jobs:
   push_to_dockerhub:
