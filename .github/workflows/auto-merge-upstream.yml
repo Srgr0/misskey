@@ -18,6 +18,7 @@ jobs:
       run: |
         git config --global user.email "66754887+Srgr0@users.noreply.github.com"
         git config --global user.name "Srgr0"
+        git remote add upstream https://github.com/misskey-dev/misskey.git
         git fetch upstream develop
 
     - name: Merge Upstream
