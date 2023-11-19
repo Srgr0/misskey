@@ -1,0 +1,31 @@
+name: Merge Upstream
+
+on:
+  schedule:
+    - cron: '*/5 * * * *'
+
+jobs:
+  merge:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@main
+      with:
+        ref: 'upstream'
+
+    - name: Fetch Upstream
+      run: |
+        git config --global user.email "66754887+Srgr0@users.noreply.github.com"
+        git config --global user.name "Srgr0"
+        git fetch upstream develop
+
+    - name: Merge Upstream
+      run: |
+        git merge upstream/develop --no-edit
+        if [ $? -ne 0 ]; then
+          echo "Merge conflict detected, stopping workflow."
+          exit 1
+        fi
+
+    - name: Push Changes
+      run: git push origin upstream
