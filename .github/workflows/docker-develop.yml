@@ -74,7 +74,7 @@ jobs:
         with:
           registry: ghcr.io
           username: srgr0
-          password: ${{ secrets.GH_TOKEN_FOR_PUSH_TO_GHCR }}
+          password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: 'Build and Push to GitHub Container Repository'
         uses: docker/build-push-action@v5
