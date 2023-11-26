@@ -13,7 +13,7 @@ jobs:
       uses: actions/checkout@main
       with:
         ref: 'upstream'
-        token: ${{ secrets.GH_TOKEN_FOR_MERGE }}
+        token: ${{ secrets.GH_TOKEN_FOR_MERGE }} #Custom Token required to write workflow file
 
     - name: Fetch Upstream
       run: |
