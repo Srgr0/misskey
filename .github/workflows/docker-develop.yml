@@ -23,7 +23,8 @@ jobs:
           ref: ${{ github.event.inputs.branch || github.ref }}
 
       - name: Get branch name
-        run: echo "BRANCH_NAME=${{ github.event.inputs.branch || github.ref }}" >> $GITHUB_ENV
+        id: get_branch
+        run: echo "::set-output name=branch::$(git rev-parse --abbrev-ref HEAD)"
 
       - name: 'Set up Docker Buildx'
         id: buildx
@@ -51,8 +52,8 @@ jobs:
           push: true
           platforms: ${{ steps.buildx.outputs.platforms }}
           provenance: false
-          tags: srgr0/misskey:$BRANCH_NAME
-          labels: $BRANCH_NAME
+          tags: srgr0/misskey:${{ steps.get_branch.outputs.branch }}
+          labels: ${{ steps.get_branch.outputs.branch }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
