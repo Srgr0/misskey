@@ -5,6 +5,10 @@ on:
     branches-ignore:
       - default
   workflow_dispatch:
+    inputs:
+      branch:
+        description: 'Branch to publish docker image of (optional)'
+        required: false
 
 concurrency: docker-develop
 
@@ -15,6 +19,8 @@ jobs:
     steps:
       - name: 'Checkout GitHub Action'
         uses: actions/checkout@main
+        with:
+          ref: ${{ github.event.inputs.branch || github.ref }}
 
       - name: Get branch name
         run: echo "BRANCH_NAME=$(git rev-parse --abbrev-ref HEAD)" >> $GITHUB_ENV
