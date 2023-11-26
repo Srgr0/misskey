@@ -24,7 +24,7 @@ jobs:
 
       - name: Get branch name
         id: get_branch
-        run: echo "::set-output name=branch::$(git rev-parse --abbrev-ref HEAD)"
+        run: echo "branch=$(git rev-parse --abbrev-ref HEAD)" >> $GITHUB_OUTPUT
 
       - name: 'Set up Docker Buildx'
         id: buildx
@@ -63,9 +63,12 @@ jobs:
     steps:
       - name: 'Checkout GitHub Action'
         uses: actions/checkout@main
+        with:
+          ref: ${{ github.event.inputs.branch || github.ref }}
 
       - name: Get branch name
-        run: echo "BRANCH_NAME=$(git rev-parse --abbrev-ref HEAD)" >> $GITHUB_ENV
+        id: get_branch
+        run: echo "branch=$(git rev-parse --abbrev-ref HEAD)" >> $GITHUB_OUTPUT
 
       - name: 'Set up Docker Buildx'
         id: buildx
@@ -94,8 +97,8 @@ jobs:
           push: true
           platforms: ${{ steps.buildx.outputs.platforms }}
           provenance: false
-          tags: ghcr.io/srgr0/misskey:$BRANCH_NAME
-          labels: $BRANCH_NAME
+          tags: ghcr.io/srgr0/misskey:${{ steps.get_branch.outputs.branch }}
+          labels: ${{ steps.get_branch.outputs.branch }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
@@ -103,11 +106,14 @@ jobs:
 #        name: 'Push Docker image to Azure Container Registory'
 #        runs-on: ubuntu-latest
 #        steps:
-#        - name: 'Checkout GitHub Action'
-#          uses: actions/checkout@main3
+#      - name: 'Checkout GitHub Action'
+#        uses: actions/checkout@main
+#        with:
+#          ref: ${{ github.event.inputs.branch || github.ref }}
 #
-#        - name: Get branch name
-#          run: echo "BRANCH_NAME=$(git rev-parse --abbrev-ref HEAD)" >> $GITHUB_ENV
+#      - name: Get branch name
+#         id: get_branch
+#         run: echo "branch=$(git rev-parse --abbrev-ref HEAD)" >> $GITHUB_OUTPUT
 #
 #        - name: 'Set up Docker Buildx'
 #          id: buildx
@@ -133,8 +139,8 @@ jobs:
 #            username: ${{ secrets.REGISTRY_USERNAME }}
 #            password: ${{ secrets.REGISTRY_PASSWORD }}
 #        - run: |
-#            docker build . -t ${{ secrets.REGISTRY_LOGIN_SERVER }}/misskey:$BRANCH_NAME
-#            docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/misskey:$BRANCH_NAME
+#            docker build . -t ${{ secrets.REGISTRY_LOGIN_SERVER }}/misskey:${{ steps.get_branch.outputs.branch }}
+#            docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/misskey:${{ steps.get_branch.outputs.branch }}
 
   push_to_quay:
     name: 'Push Docker image to quay'
@@ -142,9 +148,12 @@ jobs:
     steps:
       - name: 'Checkout GitHub Action'
         uses: actions/checkout@main
+        with:
+          ref: ${{ github.event.inputs.branch || github.ref }}
 
       - name: Get branch name
-        run: echo "BRANCH_NAME=$(git rev-parse --abbrev-ref HEAD)" >> $GITHUB_ENV
+        id: get_branch
+        run: echo "branch=$(git rev-parse --abbrev-ref HEAD)" >> $GITHUB_OUTPUT
 
       - name: 'Set up Docker Buildx'
         id: buildx
@@ -173,8 +182,8 @@ jobs:
           push: true
           platforms: ${{ steps.buildx.outputs.platforms }}
           provenance: false
-          tags: quay.io/srgr0/misskey:$BRANCH_NAME
-          labels: $BRANCH_NAME
+          tags: quay.io/srgr0/misskey:${{ steps.get_branch.outputs.branch }}
+          labels: ${{ steps.get_branch.outputs.branch }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
