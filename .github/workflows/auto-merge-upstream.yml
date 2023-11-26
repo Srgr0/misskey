@@ -32,3 +32,13 @@ jobs:
 
     - name: Push Changes
       run: git push origin upstream
+
+  trigger_docker-develop:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 'Trigger Dispatch Event'
+        run: |
+          curl -X POST -H "Authorization: token ${{ secrets.GH_TOKEN_FOR_DISPATCH_dd }}" \
+               -H "Accept: application/vnd.github.v3+json" \
+               https://api.github.com/repos/srgr0/misskey/actions/workflows/docker-develop.yml/dispatches \
+               -d '{"ref": "main", "inputs": {"branch": "upstream"}}'
