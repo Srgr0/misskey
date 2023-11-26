@@ -23,7 +23,7 @@ jobs:
           ref: ${{ github.event.inputs.branch || github.ref }}
 
       - name: Get branch name
-        run: echo "BRANCH_NAME=$(git rev-parse --abbrev-ref HEAD)" >> $GITHUB_ENV
+        run: echo "BRANCH_NAME=${{ github.event.inputs.branch || github.ref }}" >> $GITHUB_ENV
 
       - name: 'Set up Docker Buildx'
         id: buildx
