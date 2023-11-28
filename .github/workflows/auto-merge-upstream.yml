@@ -1,4 +1,4 @@
-name: Merge Upstream
+name: Merge Upstream (upstream)
 
 on:
   schedule:
