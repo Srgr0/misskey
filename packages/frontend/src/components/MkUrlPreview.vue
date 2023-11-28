@@ -30,14 +30,11 @@ SPDX-License-Identifier: AGPL-3.0-only
 	<div ref="twitter">
 		<iframe
 			ref="tweet"
-			sandbox="allow-popups allow-scripts allow-same-origin"
+			allow="fullscreen;web-share"
+			sandbox="allow-popups allow-popups-to-escape-sandbox allow-scripts allow-same-origin"
 			scrolling="no"
-			frameborder="0"
-			allowtransparency="true"
-			allowfullscreen="true"
 			:style="{ position: 'relative', width: '100%', height: `${tweetHeight}px`, border: 0 }"
-			:src="`https://platform.twitter.com/embed/Tweet.html?embedId=${embedId}&amp;features=e30%3D&amp;frame=false&amp;hideCard=false&amp;hideThread=false&amp;lang=en&amp;theme=${defaultStore.state.darkMode ? 'dark' : 'light'}&amp;id=${tweetId}`"
-			data-tweet-id="${tweetId}"
+			:src="`https://platform.twitter.com/embed/index.html?embedId=${embedId}&amp;hideCard=false&amp;hideThread=false&amp;lang=en&amp;theme=${defaultStore.state.darkMode ? 'dark' : 'light'}&amp;id=${tweetId}`"
 		></iframe>
 	</div>
 	<div :class="$style.action">

@@ -47,7 +47,7 @@ export const meta = {
 export const paramDef = {
 	type: 'object',
 	properties: {
-		count: { type: 'integer', minimum: 1, maximum: 10000000000, default: 1 },
+		count: { type: 'integer', minimum: 1, maximum: 100, default: 1 },
 		expiresAt: { type: 'string', nullable: true },
 	},
 	required: [],
