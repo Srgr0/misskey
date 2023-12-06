@@ -3,7 +3,7 @@
 
 /*
  * version: 2023.12.0-beta.1
- * generatedAt: 2023-12-03T02:04:44.864Z
+ * generatedAt: 2023-12-04T11:17:51.997Z
  */
 
 /**
@@ -3197,17 +3197,7 @@ export type components = {
       usePasswordLessLogin: boolean;
       /** @default false */
       securityKeys: boolean;
-      roles: ({
-          /** Format: id */
-          id: string;
-          name: string;
-          color: string | null;
-          iconUrl: string | null;
-          description: string;
-          isModerator: boolean;
-          isAdministrator: boolean;
-          displayOrder: number;
-        })[];
+      roles: components['schemas']['RoleLite'][];
       memo: string | null;
       moderationNote?: string;
       isFollowing?: boolean;
@@ -3218,7 +3208,8 @@ export type components = {
       isBlocked?: boolean;
       isMuted?: boolean;
       isRenoteMuted?: boolean;
-      notify?: string;
+      /** @enum {string} */
+      notify?: 'normal' | 'none';
       withReplies?: boolean;
     };
     MeDetailedOnly: {
@@ -3253,7 +3244,52 @@ export type components = {
       mutedWords: string[][];
       hardMutedWords: string[][];
       mutedInstances: string[] | null;
-      notificationRecieveConfig: Record<string, never>;
+      notificationRecieveConfig: {
+        app?: {
+          /** @enum {string} */
+          type: 'all' | 'following' | 'follower' | 'mutualFollow' | 'list' | 'never';
+        };
+        quote?: {
+          /** @enum {string} */
+          type: 'all' | 'following' | 'follower' | 'mutualFollow' | 'list' | 'never';
+        };
+        reply?: {
+          /** @enum {string} */
+          type: 'all' | 'following' | 'follower' | 'mutualFollow' | 'list' | 'never';
+        };
+        follow?: {
+          /** @enum {string} */
+          type: 'all' | 'following' | 'follower' | 'mutualFollow' | 'list' | 'never';
+        };
+        renote?: {
+          /** @enum {string} */
+          type: 'all' | 'following' | 'follower' | 'mutualFollow' | 'list' | 'never';
+        };
+        mention?: {
+          /** @enum {string} */
+          type: 'all' | 'following' | 'follower' | 'mutualFollow' | 'list' | 'never';
+        };
+        reaction?: {
+          /** @enum {string} */
+          type: 'all' | 'following' | 'follower' | 'mutualFollow' | 'list' | 'never';
+        };
+        pollEnded?: {
+          /** @enum {string} */
+          type: 'all' | 'following' | 'follower' | 'mutualFollow' | 'list' | 'never';
+        };
+        achievementEarned?: {
+          /** @enum {string} */
+          type: 'all' | 'following' | 'follower' | 'mutualFollow' | 'list' | 'never';
+        };
+        receiveFollowRequest?: {
+          /** @enum {string} */
+          type: 'all' | 'following' | 'follower' | 'mutualFollow' | 'list' | 'never';
+        };
+        followRequestAccepted?: {
+          /** @enum {string} */
+          type: 'all' | 'following' | 'follower' | 'mutualFollow' | 'list' | 'never';
+        };
+      };
       emailNotificationTypes: string[];
       achievements: {
           name: string;
@@ -3287,7 +3323,16 @@ export type components = {
       };
       email?: string | null;
       emailVerified?: boolean | null;
-      securityKeysList?: Record<string, never>[];
+      securityKeysList?: {
+          /**
+           * Format: id
+           * @example xxxxxxxxxx
+           */
+          id: string;
+          name: string;
+          /** Format: date-time */
+          lastUsed: string;
+        }[];
     };
     UserDetailedNotMe: components['schemas']['UserLite'] & components['schemas']['UserDetailedNotMeOnly'];
     MeDetailed: components['schemas']['UserLite'] & components['schemas']['UserDetailedNotMeOnly'] & components['schemas']['MeDetailedOnly'];
@@ -3795,6 +3840,160 @@ export type components = {
       headers: Record<string, never>;
       success: boolean;
     };
+    RoleLite: {
+      /**
+       * Format: id
+       * @example xxxxxxxxxx
+       */
+      id: string;
+      /** @example New Role */
+      name: string;
+      /** @example #000000 */
+      color: string | null;
+      iconUrl: string | null;
+      description: string;
+      /** @example false */
+      isModerator: boolean;
+      /** @example false */
+      isAdministrator: boolean;
+      /** @example 0 */
+      displayOrder: number;
+    };
+    Role: components['schemas']['RoleLite'] & ({
+      /** Format: date-time */
+      createdAt: string;
+      /** Format: date-time */
+      updatedAt: string;
+      /** @enum {string} */
+      target: 'manual' | 'conditional';
+      condFormula: Record<string, never>;
+      /** @example false */
+      isPublic: boolean;
+      /** @example false */
+      isExplorable: boolean;
+      /** @example false */
+      asBadge: boolean;
+      /** @example false */
+      canEditMembersByModerator: boolean;
+      policies: {
+        pinLimit: {
+          value: number | boolean;
+          priority: number;
+          useDefault: boolean;
+        };
+        canInvite: {
+          value: number | boolean;
+          priority: number;
+          useDefault: boolean;
+        };
+        clipLimit: {
+          value: number | boolean;
+          priority: number;
+          useDefault: boolean;
+        };
+        canHideAds: {
+          value: number | boolean;
+          priority: number;
+          useDefault: boolean;
+        };
+        inviteLimit: {
+          value: number | boolean;
+          priority: number;
+          useDefault: boolean;
+        };
+        antennaLimit: {
+          value: number | boolean;
+          priority: number;
+          useDefault: boolean;
+        };
+        gtlAvailable: {
+          value: number | boolean;
+          priority: number;
+          useDefault: boolean;
+        };
+        ltlAvailable: {
+          value: number | boolean;
+          priority: number;
+          useDefault: boolean;
+        };
+        webhookLimit: {
+          value: number | boolean;
+          priority: number;
+          useDefault: boolean;
+        };
+        canPublicNote: {
+          value: number | boolean;
+          priority: number;
+          useDefault: boolean;
+        };
+        userListLimit: {
+          value: number | boolean;
+          priority: number;
+          useDefault: boolean;
+        };
+        wordMuteLimit: {
+          value: number | boolean;
+          priority: number;
+          useDefault: boolean;
+        };
+        alwaysMarkNsfw: {
+          value: number | boolean;
+          priority: number;
+          useDefault: boolean;
+        };
+        canSearchNotes: {
+          value: number | boolean;
+          priority: number;
+          useDefault: boolean;
+        };
+        driveCapacityMb: {
+          value: number | boolean;
+          priority: number;
+          useDefault: boolean;
+        };
+        rateLimitFactor: {
+          value: number | boolean;
+          priority: number;
+          useDefault: boolean;
+        };
+        inviteLimitCycle: {
+          value: number | boolean;
+          priority: number;
+          useDefault: boolean;
+        };
+        noteEachClipsLimit: {
+          value: number | boolean;
+          priority: number;
+          useDefault: boolean;
+        };
+        inviteExpirationTime: {
+          value: number | boolean;
+          priority: number;
+          useDefault: boolean;
+        };
+        canManageCustomEmojis: {
+          value: number | boolean;
+          priority: number;
+          useDefault: boolean;
+        };
+        userEachUserListsLimit: {
+          value: number | boolean;
+          priority: number;
+          useDefault: boolean;
+        };
+        canManageAvatarDecorations: {
+          value: number | boolean;
+          priority: number;
+          useDefault: boolean;
+        };
+        canUseTranslator: {
+          value: number | boolean;
+          priority: number;
+          useDefault: boolean;
+        };
+      };
+      usersCount: number;
+    });
   };
   responses: never;
   parameters: never;
@@ -7792,9 +7991,11 @@ export type operations = {
       };
     };
     responses: {
-      /** @description OK (without any results) */
-      204: {
-        content: never;
+      /** @description OK (with results) */
+      200: {
+        content: {
+          'application/json': components['schemas']['Role'];
+        };
       };
       /** @description Client error */
       400: {
@@ -7888,9 +8089,11 @@ export type operations = {
    */
   'admin/roles/list': {
     responses: {
-      /** @description OK (without any results) */
-      204: {
-        content: never;
+      /** @description OK (with results) */
+      200: {
+        content: {
+          'application/json': components['schemas']['Role'][];
+        };
       };
       /** @description Client error */
       400: {
@@ -7940,9 +8143,11 @@ export type operations = {
       };
     };
     responses: {
-      /** @description OK (without any results) */
-      204: {
-        content: never;
+      /** @description OK (with results) */
+      200: {
+        content: {
+          'application/json': components['schemas']['Role'];
+        };
       };
       /** @description Client error */
       400: {
@@ -19786,9 +19991,11 @@ export type operations = {
    */
   'roles/list': {
     responses: {
-      /** @description OK (without any results) */
-      204: {
-        content: never;
+      /** @description OK (with results) */
+      200: {
+        content: {
+          'application/json': components['schemas']['Role'][];
+        };
       };
       /** @description Client error */
       400: {
@@ -19838,9 +20045,11 @@ export type operations = {
       };
     };
     responses: {
-      /** @description OK (without any results) */
-      204: {
-        content: never;
+      /** @description OK (with results) */
+      200: {
+        content: {
+          'application/json': components['schemas']['Role'];
+        };
       };
       /** @description Client error */
       400: {
