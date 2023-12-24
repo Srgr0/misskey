@@ -5,7 +5,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  merge:
+  deploy-test-environment:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout
@@ -19,6 +19,13 @@ jobs:
         sudo tar xvzf ./ngrok-v3-stable-linux-amd64.tgz -C /usr/local/bin
         ngrok authtoken ${{ secrets.NGROK_AUTH_TOKEN }}
         ngrok http -auth="${{ secrets.ACCESS_ID }}:${{ secrets.ACCESS_PASS }}" 3000 &
+
+    - name: Set environment variable (for tput command)
+      run: echo "TERM=xterm" >> $GITHUB_ENV
+
+    - uses: actions/setup-node@v4
+      with:
+        node-version: 20.10.0
 
     - name: Install misskey
       run: |
