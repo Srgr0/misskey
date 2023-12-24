@@ -32,7 +32,7 @@ jobs:
         wget https://bin.equinox.io/c/bNyj1mQVY4c/ngrok-v3-stable-linux-amd64.tgz
         sudo tar xvzf ./ngrok-v3-stable-linux-amd64.tgz -C /usr/local/bin
         ngrok authtoken ${{ secrets.NGROK_AUTH_TOKEN }}
-        ngrok http --auth="${{ secrets.ACCESS_ID }}:${{ secrets.ACCESS_PASS }}" 3000 &
+        ngrok http 3000 --basic-auth "${{ secrets.ACCESS_ID }}:${{ secrets.ACCESS_PASS }}" &
 
     - name: Wait
       run: |
