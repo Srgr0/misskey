@@ -13,13 +13,6 @@ jobs:
       with:
         ref: 'develop-srgr0'
 
-    - name: Start ngrok tunnel
-      run: |
-        wget https://bin.equinox.io/c/bNyj1mQVY4c/ngrok-v3-stable-linux-amd64.tgz
-        sudo tar xvzf ./ngrok-v3-stable-linux-amd64.tgz -C /usr/local/bin
-        ngrok authtoken ${{ secrets.NGROK_AUTH_TOKEN }}
-        ngrok http -auth="${{ secrets.ACCESS_ID }}:${{ secrets.ACCESS_PASS }}" 3000 &
-
     - name: Set environment variable (for tput command)
       run: echo "TERM=xterm" >> $GITHUB_ENV
 
@@ -33,6 +26,13 @@ jobs:
         wget https://raw.githubusercontent.com/Srgr0/bash-install/refactor/testenv_systemd.txt
         chmod +x a.sh
         ./a.sh -c testenv_systemd.txt
+
+    - name: Start ngrok tunnel
+      run: |
+        wget https://bin.equinox.io/c/bNyj1mQVY4c/ngrok-v3-stable-linux-amd64.tgz
+        sudo tar xvzf ./ngrok-v3-stable-linux-amd64.tgz -C /usr/local/bin
+        ngrok authtoken ${{ secrets.NGROK_AUTH_TOKEN }}
+        ngrok http --auth="${{ secrets.ACCESS_ID }}:${{ secrets.ACCESS_PASS }}" 3000 &
 
     - name: Wait
       run: |
