@@ -24,8 +24,8 @@ jobs:
       run: |
         wget https://raw.githubusercontent.com/Srgr0/bash-install/refactor/a.sh
         wget https://raw.githubusercontent.com/Srgr0/bash-install/refactor/testenv_systemd.txt
-        chmod +x a.sh
-        ./a.sh -c testenv_systemd.txt
+        sudo chmod 555 ./a.sh
+        sudo bash -x ./a.sh -c ./testenv_systemd.txt
 
     - name: Start ngrok tunnel
       run: |
