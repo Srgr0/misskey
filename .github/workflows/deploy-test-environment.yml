@@ -23,9 +23,9 @@ jobs:
     - name: Install misskey
       run: |
         wget https://raw.githubusercontent.com/Srgr0/bash-install/refactor/a.sh
-        wget https://raw.githubusercontent.com/Srgr0/bash-install/refactor/testenv_systemd.txt
+        wget https://raw.githubusercontent.com/Srgr0/bash-install/refactor/testenv_githubactions.txt
         sudo chmod 555 ./a.sh
-        sudo bash -x ./a.sh -c ./testenv_systemd.txt
+        sudo bash -x ./a.sh -c ./testenv_githubactions.txt
 
     - name: Start ngrok tunnel
       run: |
@@ -36,4 +36,4 @@ jobs:
 
     - name: Wait
       run: |
-        sleep 300
+        sleep 600
