@@ -12,17 +12,23 @@ jobs:
       uses: actions/checkout@v4
       with:
         ref: 'develop-srgr0'
+        
 
     - name: Set environment variable (for tput command & pnpm)
       run: |
         echo "TERM=xterm" >> $GITHUB_ENV
+
+    - name: Uninstall nodejs
+      run: |
+        sudo apt purge nodejs npm
+        sudo rm -rf /usr/local/bin/npm /usr/local/bin/node /usr/local/lib/node_modules
 
     - name: Setup node
       uses: actions/setup-node@v4
       with:
         node-version-file: '.node-version'
 
-    - name: Setup node 2
+    - name: Check node version
       run: |
         echo "Nodejs version:"
         node -v
