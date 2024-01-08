@@ -24,8 +24,8 @@ jobs:
 
     - name: Setup node 2
       run: |
-        apt -qq update -y
-        apt -qq install -y libjemalloc-dev
+        sudo apt -qq update -y
+        sudo apt -qq install -y libjemalloc-dev
         echo "Nodejs version:"
         node -v
         corepack enable
