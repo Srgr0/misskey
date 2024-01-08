@@ -31,6 +31,9 @@ jobs:
         corepack enable
         echo "Corepack version:"
         corepack -v
+        echo "pnpm version:"
+        pnpm -v
+        NODE_ENV=production pnpm install --frozen-lockfile
 
     - name: Install misskey
       run: |
