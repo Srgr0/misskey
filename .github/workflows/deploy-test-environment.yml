@@ -13,12 +13,20 @@ jobs:
       with:
         ref: 'develop-srgr0'
 
-    - name: Set environment variable (for tput command)
-      run: echo "TERM=xterm" >> $GITHUB_ENV
+    - name: Set environment variable (for tput command & pnpm)
+      run: |
+        echo "TERM=xterm" >> $GITHUB_ENV
+        echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
 
-    - uses: actions/setup-node@v4
+    - name: Setup node
+      uses: actions/setup-node@v4
       with:
         node-version: 20.10.0
+
+    - name: Setup pnpm
+      uses: pnpm/action-setup@v2
+      with:
+        version: latest
 
     - name: Install misskey
       run: |
