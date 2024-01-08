@@ -24,18 +24,8 @@ jobs:
 
     - name: Setup node 2
       run: |
-        sudo apt -qq update -y
-        sudo apt -qq install -y libjemalloc-dev
         echo "Nodejs version:"
         node -v
-        corepack enable
-        echo "Corepack version:"
-        corepack -v
-        corepack prepare pnpm@latest --activate
-        echo "pnpm version:"
-        pnpm -v
-        echo "pnpm path: $(which pnpm)"
-        echo "$(dirname $(which pnpm))" >> $GITHUB_PATH
 
     - name: Install misskey
       run: |
