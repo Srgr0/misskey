@@ -44,4 +44,4 @@ jobs:
 
     - name: Wait
       run: |
-        sleep 600
+        timeout 600 tail -f /var/log/syslog
