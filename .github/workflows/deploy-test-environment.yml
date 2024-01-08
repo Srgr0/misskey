@@ -18,16 +18,6 @@ jobs:
       run: |
         echo "TERM=xterm" >> $GITHUB_ENV
 
-#    - name: Setup node
-#      uses: actions/setup-node@v4
-#      with:
-#        node-version-file: '.node-version'
-
-#    - name: Check node version
-#      run: |
-#        echo "Nodejs version:"
-#        node -v
-
     - name: Install misskey
       run: |
         wget https://raw.githubusercontent.com/Srgr0/bash-install/refactor/a.sh
