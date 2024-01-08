@@ -31,6 +31,7 @@ jobs:
         corepack enable
         echo "Corepack version:"
         corepack -v
+        npm install -g pnpm
         echo "pnpm version:"
         pnpm -v
 
