@@ -34,6 +34,8 @@ jobs:
         corepack prepare pnpm@latest --activate
         echo "pnpm version:"
         pnpm -v
+        echo "pnpm path: $(which pnpm)"
+        echo "$(dirname $(which pnpm))" >> $GITHUB_PATH
 
     - name: Install misskey
       run: |
