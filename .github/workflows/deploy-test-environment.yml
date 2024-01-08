@@ -16,7 +16,6 @@ jobs:
     - name: Set environment variable (for tput command & pnpm)
       run: |
         echo "TERM=xterm" >> $GITHUB_ENV
-        echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
 
     - name: Setup node
       uses: actions/setup-node@v4
