@@ -22,10 +22,15 @@ jobs:
       with:
         node-version: 20.10.0
 
-    - name: Setup pnpm
-      uses: pnpm/action-setup@v2
-      with:
-        version: latest
+    - name: Setup node 2
+      run: |
+        apt -qq update -y
+        apt -qq install -y libjemalloc-dev
+        echo "Nodejs version:"
+        node -v
+        corepack enable
+        echo "Corepack version:"
+        corepack -v
 
     - name: Install misskey
       run: |
