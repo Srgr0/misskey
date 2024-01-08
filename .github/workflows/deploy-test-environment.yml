@@ -15,7 +15,7 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v4
       with:
-        ref: ${{ github.event.inputs.branch }} || 'develop-srgr0'
+        ref: ${{ github.event.inputs.branch || 'develop-srgr0' }}
         
 
     - name: Set environment variable (for tput command & pnpm)
