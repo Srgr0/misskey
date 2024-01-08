@@ -3,6 +3,10 @@ name: Deploy test environment
 on:
   #push
   workflow_dispatch:
+    inputs:
+      branch:
+        description: 'Branch to deploy(optional)'
+        required: false
 
 jobs:
   deploy-test-environment:
