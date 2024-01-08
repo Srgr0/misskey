@@ -45,4 +45,4 @@ jobs:
 
     - name: Wait
       run: |
-        timeout 600 tail -f /var/log/syslog
+        timeout 600 tail -f /var/log/syslog || true
