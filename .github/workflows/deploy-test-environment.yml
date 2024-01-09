@@ -61,7 +61,6 @@ jobs:
         COMMIT_URL="https://github.com/$REPOSITORY/commit/$SHA"
         curl -X POST -H "Content-Type: application/json" -d "{\"content\": \"==============================\nURL: https://$TUNNEL_DOMAIN\nRepository: $REPOSITORY\nCommit: $COMMIT_URL\nTime: $CURRENT_TIME\n==============================\"}" ${{ secrets.DISCORD_WEBHOOK_URL }}
 
-
     - name: Wait
       run: |
         timeout 600 tail -f /var/log/syslog || true
