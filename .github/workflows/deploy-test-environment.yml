@@ -48,7 +48,8 @@ jobs:
       run: |
         CURRENT_TIME=$(date +'%Y-%m-%d %H:%M:%S JST')
         COMMIT_URL="https://github.com/${{ github.repository }}/commit/${{ github.sha }}"
-        curl -X POST -H "Content-Type: application/json" -d "{\"content\": \"URL: https://$TUNNEL_DOMAIN\nRepository: ${{ github.repository }}\nCommit: $COMMIT_URL\nTime: $CURRENT_TIME\"}" ${{ secrets.DISCORD_WEBHOOK_URL }}
+        curl -X POST -H "Content-Type: application/json" -d "{\"content\": \"==============================\nURL: https://$TUNNEL_DOMAIN\nRepository: ${{ github.repository }}\nCommit: $COMMIT_URL\nTime: $CURRENT_TIME\n==============================\"}" ${{ secrets.DISCORD_WEBHOOK_URL }}
+
 
     - name: Wait
       run: |
