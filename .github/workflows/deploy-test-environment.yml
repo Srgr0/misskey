@@ -4,8 +4,11 @@ on:
   #push
   workflow_dispatch:
     inputs:
+      repository:
+        description: 'Repository to deploy (optional)'
+        required: false
       branch:
-        description: 'Branch to deploy(optional)'
+        description: 'Branch to deploy (optional)'
         required: false
 
 jobs:
@@ -15,9 +18,9 @@ jobs:
     - name: Set environment variable (for tput command & pnpm)
       run: |
         echo "TERM=xterm" >> $GITHUB_ENV
-        REPOSITORY="misskey-dev/misskey"
+        REPOSITORY=${{ github.event.inputs.repository || github.repository }}
         echo "REPOSITORY=$REPOSITORY" >> $GITHUB_ENV
-        BRANCH=${{ github.event.inputs.branch || 'develop-srgr0' }}
+        BRANCH=${{ github.event.inputs.branch || github.ref_name }}
         echo "BRANCH=$BRANCH" >> $GITHUB_ENV
 
     - name: Checkout
