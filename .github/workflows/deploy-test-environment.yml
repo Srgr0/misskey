@@ -15,13 +15,21 @@ jobs:
     - name: Set environment variable (for tput command & pnpm)
       run: |
         echo "TERM=xterm" >> $GITHUB_ENV
+        REPOSITORY="misskey-dev/misskey"
+        echo "REPOSITORY=$REPOSITORY" >> $GITHUB_ENV
         BRANCH=${{ github.event.inputs.branch || 'develop-srgr0' }}
         echo "BRANCH=$BRANCH" >> $GITHUB_ENV
 
     - name: Checkout
       uses: actions/checkout@v4
       with:
+        repository: ${{ env.REPOSITORY }}
         ref: ${{ env.BRANCH }}
+
+    - name: Get the latest commit SHA
+      run: |
+        SHA=$(git log -1 --format="%H")
+        echo "SHA=$SHA" >> $GITHUB_ENV
 
     - name: Start cloudflare tunnel (quick)
       run: |
@@ -39,7 +47,7 @@ jobs:
         wget https://raw.githubusercontent.com/Srgr0/bash-install/refactor/a.sh
         wget https://raw.githubusercontent.com/Srgr0/bash-install/refactor/testenv_githubactions.txt
         sed -i "s/host=127.0.0.1/host=$TUNNEL_DOMAIN/g" testenv_githubactions.txt
-        sed -i "s|git_repository=https://github.com/misskey-dev/misskey|git_repository=https://github.com/$GITHUB_REPOSITORY|g" testenv_githubactions.txt
+        sed -i "s|git_repository=https://github.com/misskey-dev/misskey|git_repository=https://github.com/$REPOSITORY|g" testenv_githubactions.txt
         sed -i "s|git_branch=master|git_branch=$BRANCH|g" testenv_githubactions.txt
         sudo chmod 555 ./a.sh
         sudo bash -x ./a.sh -c ./testenv_githubactions.txt
@@ -47,8 +55,8 @@ jobs:
     - name: Post tunnel info to Discord
       run: |
         CURRENT_TIME=$(date +'%Y-%m-%d %H:%M:%S JST')
-        COMMIT_URL="https://github.com/${{ github.repository }}/commit/${{ github.sha }}"
-        curl -X POST -H "Content-Type: application/json" -d "{\"content\": \"==============================\nURL: https://$TUNNEL_DOMAIN\nRepository: ${{ github.repository }}\nCommit: $COMMIT_URL\nTime: $CURRENT_TIME\n==============================\"}" ${{ secrets.DISCORD_WEBHOOK_URL }}
+        COMMIT_URL="https://github.com/$REPOSITORY/commit/$SHA"
+        curl -X POST -H "Content-Type: application/json" -d "{\"content\": \"==============================\nURL: https://$TUNNEL_DOMAIN\nRepository: $REPOSITORY\nCommit: $COMMIT_URL\nTime: $CURRENT_TIME\n==============================\"}" ${{ secrets.DISCORD_WEBHOOK_URL }}
 
 
     - name: Wait
