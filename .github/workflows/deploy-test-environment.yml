@@ -40,6 +40,8 @@ jobs:
         sed -i "s/host=127.0.0.1/host=$TUNNEL_DOMAIN/g" testenv_githubactions.txt
         sudo chmod 555 ./a.sh
         sudo bash -x ./a.sh -c ./testenv_githubactions.txt
+      env:
+        GITHUB_WORKSPACE: $GITHUB_WORKSPACE
 
     - name: Post tunnel info to Discord
       run: |
