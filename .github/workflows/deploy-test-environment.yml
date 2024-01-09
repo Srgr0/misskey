@@ -29,8 +29,9 @@ jobs:
         sudo cloudflared tunnel --metrics localhost:55555 --url localhost:3000 &
         sleep 15
         TUNNEL_RESPONSE=$(curl http://localhost:55555/quicktunnel)
-        TUNNEL_DOMAIN=$(echo $TUNNEL_RESPONSE | grep -o '"hostname":"[^"]*' | grep -o '[^"]*$') >> $GITHUB_ENV
+        TUNNEL_DOMAIN=$(echo $TUNNEL_RESPONSE | grep -o '"hostname":"[^"]*' | grep -o '[^"]*$')
         echo "::add-mask::$TUNNEL_DOMAIN"
+        echo "TUNNEL_DOMAIN=$TUNNEL_DOMAIN" >> $GITHUB_ENV
 
     - name: Install misskey
       run: |
