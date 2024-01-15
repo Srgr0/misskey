@@ -8,8 +8,6 @@ on:
 jobs:
   merge:
     runs-on: ubuntu-latest
-    outputs:
-      push_successful: ${{ steps.check_push.outputs.push_successful }}
     steps:
     - name: Checkout
       uses: actions/checkout@main
@@ -29,10 +27,14 @@ jobs:
         CHANGES=$(git diff upstream/develop...HEAD)
         if [ -z "$CHANGES" ]; then
           echo "No changes to merge."
+          echo "need_push=false" >> $GITHUB_ENV
           exit 0
         fi
+        echo "need_push=true" >> $GITHUB_ENV
 
     - name: Merge Upstream
+      #変更内容がある場合のみ実行
+      if: env.need_push == 'true'
       run: |
         git merge upstream/develop --no-edit
         if [ $? -ne 0 ]; then
@@ -41,16 +43,16 @@ jobs:
         fi
 
     - name: Push Changes
-      run: git push origin upstream
-
-    - name: Set Push Flag
-      id: check_push
-      run: echo "::set-output name=push_successful::true"
+      #変更内容がある場合のみ実行
+      if: env.need_push == 'true'
+      run: |
+        git push origin upstream
+        echo "push_successful=true" >> $GITHUB_ENV
 
   trigger_docker-develop:
     runs-on: ubuntu-latest
     needs: merge
-    if: needs.merge.outputs.push_successful == 'true'
+    if: env.push_successful == 'true'
     steps:
       - name: 'Trigger Dispatch Event'
         run: |
@@ -62,7 +64,7 @@ jobs:
   trigger_deploy-test-environment:
     runs-on: ubuntu-latest
     needs: merge
-    if: needs.merge.outputs.push_successful == 'true'
+    if: env.push_successful == 'true'
     steps:
       - name: 'Trigger Dispatch Event'
         run: |
