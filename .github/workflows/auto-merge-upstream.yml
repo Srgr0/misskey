@@ -8,12 +8,14 @@ on:
 jobs:
   merge:
     runs-on: ubuntu-latest
+    outputs:
+      push_successful: ${{ steps.check_push.outputs.push_successful }}
     steps:
     - name: Checkout
       uses: actions/checkout@main
       with:
         ref: 'upstream'
-        token: ${{ secrets.GH_TOKEN_FOR_MERGE }} #Custom Token required to write workflow file
+        token: ${{ secrets.GH_TOKEN_FOR_MERGE }}
 
     - name: Fetch Upstream
       run: |
@@ -21,6 +23,14 @@ jobs:
         git config --global user.name "Srgr0"
         git remote add upstream https://github.com/misskey-dev/misskey.git
         git fetch upstream develop
+
+    - name: Check for Changes
+      run: |
+        CHANGES=$(git diff upstream/develop...HEAD)
+        if [ -z "$CHANGES" ]; then
+          echo "No changes to merge."
+          exit 0
+        fi
 
     - name: Merge Upstream
       run: |
@@ -33,9 +43,14 @@ jobs:
     - name: Push Changes
       run: git push origin upstream
 
+    - name: Set Push Flag
+      id: check_push
+      run: echo "::set-output name=push_successful::true"
+
   trigger_docker-develop:
     runs-on: ubuntu-latest
     needs: merge
+    if: needs.merge.outputs.push_successful == 'true'
     steps:
       - name: 'Trigger Dispatch Event'
         run: |
@@ -43,3 +58,15 @@ jobs:
                -H "Accept: application/vnd.github.v3+json" \
                https://api.github.com/repos/srgr0/misskey/actions/workflows/docker-develop.yml/dispatches \
                -d '{"ref": "default", "inputs": {"branch": "upstream"}}'
+
+  trigger_deploy-test-environment:
+    runs-on: ubuntu-latest
+    needs: merge
+    if: needs.merge.outputs.push_successful == 'true'
+    steps:
+      - name: 'Trigger Dispatch Event'
+        run: |
+          curl -X POST -H "Authorization: token ${{ secrets.GH_TOKEN_FOR_DISPATCH_dd }}" \
+               -H "Accept: application/vnd.github.v3+json" \
+               https://api.github.com/repos/srgr0/misskey/actions/workflows/deploy-test-environment.yml/dispatches \
+               -d '{"ref": "default", "inputs": {"repository": "srgr0/misskey", "branch": "upstream"}}'
