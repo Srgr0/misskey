@@ -35,7 +35,7 @@ jobs:
         fi
         echo "need_push=true" >> $GITHUB_ENV
 
-    - name: Merge Upstream
+    - name: Merge & Push Upstream
       #変更内容がある場合のみ実行
       if: env.need_push == 'true'
       run: |
@@ -45,18 +45,8 @@ jobs:
           echo "push_successful=false" >> $GITHUB_ENV
           exit 1
         fi
-
-    - name: Push Changes
-      #変更内容がある場合のみ実行
-      if: env.need_push == 'true'
-      run: |
         git push origin upstream
         echo "push_successful=true" >> $GITHUB_ENV
-
-    - name: DEBUG
-      run: |
-        echo ${{ env.need_push }}
-        echo ${{ env.push_successful }}
 
   trigger_docker-develop:
     runs-on: ubuntu-latest
