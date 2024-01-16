@@ -30,6 +30,7 @@ jobs:
         if [ -z "$CHANGES" ]; then
           echo "No changes to merge."
           echo "need_push=false" >> $GITHUB_ENV
+          echo "push_successful=false" >> $GITHUB_ENV
           exit 0
         fi
         echo "need_push=true" >> $GITHUB_ENV
@@ -41,6 +42,7 @@ jobs:
         git merge upstream/develop --no-edit
         if [ $? -ne 0 ]; then
           echo "Merge conflict detected, stopping workflow."
+          echo "push_successful=false" >> $GITHUB_ENV
           exit 1
         fi
 
