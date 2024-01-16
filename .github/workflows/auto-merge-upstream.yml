@@ -53,6 +53,11 @@ jobs:
         git push origin upstream
         echo "push_successful=true" >> $GITHUB_ENV
 
+    - name: DEBUG
+      run: |
+        echo ${{ env.need_push }}
+        echo ${{ env.push_successful }}
+
   trigger_docker-develop:
     runs-on: ubuntu-latest
     needs: merge
