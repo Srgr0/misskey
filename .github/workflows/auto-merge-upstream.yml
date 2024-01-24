@@ -26,7 +26,7 @@ jobs:
 
     - name: Check for Changes
       run: |
-        CHANGES=$(git diff upstream/develop...HEAD)
+        CHANGES=$(git diff HEAD...upstream/develop)
         if [ -z "$CHANGES" ]; then
           echo "No changes to merge."
           echo "need_push=false" >> $GITHUB_ENV
