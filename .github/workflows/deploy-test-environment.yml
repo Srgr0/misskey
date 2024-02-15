@@ -59,8 +59,8 @@ jobs:
           PR_REPO_NAME=$(gh pr view $PR_NUMBER --json headRepository -q '.headRepository.name')
           PR_REPO="$PR_REPO_OWNER/$PR_REPO_NAME"
           PR_REF=$(gh pr view $PR_NUMBER --json headRefName -q '.headRefName')
-          echo "pr-repo=$PR_REPO" > $GITHUB_OUTPUT
-          echo "pr-ref=$PR_REF" > $GITHUB_OUTPUT
+          echo "pr-repo=$PR_REPO" >> $GITHUB_OUTPUT
+          echo "pr-ref=$PR_REF" >> $GITHUB_OUTPUT
 
       - name: Extract wait time
         id: get-wait-time
